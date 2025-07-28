@@ -457,12 +457,12 @@ async def main():
                 server_name="bitcoin-liquidation-maps",
                 server_version="1.0.0",
                 capabilities=server.get_capabilities(
-                    {},  # experimental_capabilities - empty dict or appropriate object
-                    NotificationOptions(
+                    notification_options=NotificationOptions(
                         tools_changed=False,
                         resources_changed=False,
                         prompts_changed=False
-                    )
+                    ),
+                    experimental_capabilities={}
                 ),
             ),
         )
