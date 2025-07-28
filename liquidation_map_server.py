@@ -31,6 +31,7 @@ from dotenv import load_dotenv
 import mcp.types as types
 from mcp.server import Server
 from mcp.server.models import InitializationOptions
+from mcp.types import NotificationOptions
 import mcp.server.stdio
 
 # Load environment variables
@@ -445,9 +446,10 @@ Usage Examples:
             text=f"Error: Unknown tool '{name}'"
         )]
 
+
+
 async def main():
     """Main entry point for the MCP server"""
-    # Run the server using stdin/stdout streams
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
         await server.run(
             read_stream,
@@ -456,11 +458,16 @@ async def main():
                 server_name="bitcoin-liquidation-maps",
                 server_version="1.0.0",
                 capabilities=server.get_capabilities(
-                    notification_options=None,
+                    notification_options=NotificationOptions(
+                        tools_changed=False,
+                        resources_changed=False,
+                        prompts_changed=False
+                    ),
                     experimental_capabilities=None,
                 ),
             ),
         )
+
 
 if __name__ == "__main__":
     asyncio.run(main())
