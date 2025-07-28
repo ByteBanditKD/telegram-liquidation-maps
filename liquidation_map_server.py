@@ -31,6 +31,8 @@ from dotenv import load_dotenv
 import mcp.types as types
 from mcp.server import Server
 from mcp.server.models import InitializationOptions
+from mcp.server.lowlevel import NotificationOptions
+from mcp.server.models import InitializationOptions
 import mcp.server.stdio
 
 # Load environment variables
@@ -446,7 +448,6 @@ Usage Examples:
         )]
 
 
-
 async def main():
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
         await server.run(
@@ -455,9 +456,17 @@ async def main():
             InitializationOptions(
                 server_name="bitcoin-liquidation-maps",
                 server_version="1.0.0",
-                capabilities=server.get_capabilities({}, {}),  # supply required args
+                capabilities=server.get_capabilities(
+                    {},  # experimental_capabilities - empty dict or appropriate object
+                    NotificationOptions(
+                        tools_changed=False,
+                        resources_changed=False,
+                        prompts_changed=False
+                    )
+                ),
             ),
         )
+
 
 
 
