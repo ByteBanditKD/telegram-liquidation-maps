@@ -448,7 +448,6 @@ Usage Examples:
 
 
 async def main():
-    """Main entry point for the MCP server"""
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
         await server.run(
             read_stream,
@@ -456,9 +455,10 @@ async def main():
             InitializationOptions(
                 server_name="bitcoin-liquidation-maps",
                 server_version="1.0.0",
-                capabilities=server.get_capabilities(),  # no arguments
+                capabilities=server.get_capabilities({}, {}),  # supply required args
             ),
         )
+
 
 
 
