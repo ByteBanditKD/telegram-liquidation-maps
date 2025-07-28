@@ -8,7 +8,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the bot code
-COPY bot.py .
+COPY . .
+# COPY bot.py .
 # COPY .env .
 
 # Create logs directory
