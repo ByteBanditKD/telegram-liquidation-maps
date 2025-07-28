@@ -1,0 +1,4 @@
+version: 1
+start:
+  command: ["python", "liquidation_map_server.py"]
+  port: 4444
