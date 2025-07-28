@@ -1,14 +1,69 @@
-# Liquidation Heatmap Bot
+# Cryptocurrency Liquidation Maps
 
-A Telegram bot that captures cryptocurrency liquidation heatmaps from Coinglass and delivers them on demand with real-time price information.
+This repository provides cryptocurrency liquidation heatmaps from Coinglass in two formats:
+1. **Telegram Bot** - Original bot for Telegram integration
+2. **MCP Server** - New Model Context Protocol server for LLM integration
 
-## Features
+## 🚀 Quick Start
+
+### MCP Server (New!)
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the MCP server
+python liquidation_map_server.py
+
+# Or use the startup script
+./start_server.sh
+
+# For web demo
+python web_demo.py
+```
+
+### Telegram Bot (Original)
+```bash
+# Create .env file with your bot token
+cp example.env .env
+
+# Start with Docker
+docker-compose up -d
+```
+
+## 🔥 MCP Server Features
+
+The new MCP server enables LLMs to retrieve liquidation maps through natural language:
+
+- 📊 **Real-time Heatmaps**: Captures liquidation heatmaps for supported cryptocurrencies
+- 💰 **Price Integration**: Fetches current cryptocurrency prices from CoinGecko
+- ⏰ **Multiple Timeframes**: Supports 12 hour, 24 hour, 1 month, and 3 month views
+- 🔧 **MCP Compatible**: Works with any MCP-compatible LLM client
+- 🖼️ **Image Return**: Returns high-quality PNG images of the heatmaps
+- 🌐 **Web Demo**: Includes a web interface for testing
+- 🐳 **Docker Support**: Optional Selenium container for headless operation
+
+### Natural Language Examples
+- "Retrieve a Bitcoin map on the 24 hour timeframe"
+- "Get me an Ethereum liquidation heatmap for 1 month"
+- "Show me the current BTC price"
+- "What cryptocurrencies are supported?"
+
+## 🤖 Telegram Bot Features
+
+The original Telegram bot provides:
 
 - 📊 **Real-time Heatmaps**: Captures liquidation heatmaps for any supported cryptocurrency
 - 💰 **Price Integration**: Shows current cryptocurrency prices alongside heatmaps
 - ⏰ **Multiple Timeframes**: Supports 12 hour, 24 hour, 1 month, and 3 month views
 - 🤖 **Easy Commands**: Simple Telegram commands for instant access
 - 🔄 **Automated Symbol Selection**: Dynamically switches between different cryptocurrencies
+
+### Telegram Commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/map <SYMBOL> [TIMEFRAME]` | Get liquidation heatmap | `/map ETH 12 hour` |
+| `/start` or `/help` | Show help information | `/help` |
 
 ## Supported Cryptocurrencies
 
@@ -23,117 +78,134 @@ A Telegram bot that captures cryptocurrency liquidation heatmaps from Coinglass 
 - Avalanche (AVAX)
 - Polygon (MATIC)
 
-## Commands
-
-| Command | Description | Example |
-|---------|-------------|---------|
-| `/map <SYMBOL> [TIMEFRAME]` | Get liquidation heatmap | `/map ETH 12 hour` |
-| `/start` or `/help` | Show help information | `/help` |
-
-### Supported Timeframes
+## Supported Timeframes
 - `12 hour`
 - `24 hour` (default)
 - `1 month`
 - `3 month`
 
-## Setup
+## 📁 Project Structure
+
+```
+├── bot.py                     # Original Telegram bot
+├── liquidation_map_server.py  # New MCP server
+├── web_demo.py                # Web interface demo
+├── test_server.py             # MCP server testing
+├── example_usage.py           # Usage examples
+├── start_server.sh            # MCP server startup script
+├── requirements.txt           # Python dependencies
+├── docker-compose.yml         # Docker configuration
+├── mcp_config.json           # MCP client configuration
+├── PROJECT_SUMMARY.md        # Detailed project summary
+└── README.md                 # This file
+```
+
+## 🛠️ Setup
 
 ### Prerequisites
 
-- Docker and Docker Compose
-- Telegram Bot Token
-- Telegram Channel ID (optional)
+- Python 3.8+
+- Chrome browser (for local mode) or Docker (for Selenium mode)
+- For Telegram bot: Telegram Bot Token
 
-### Environment Variables
+### MCP Server Setup
 
-Create a `.env` file in the project root:
-
-```env
-TELEGRAM_BOT_TOKEN=your_bot_token_here
-TELEGRAM_CHANNEL_ID=your_channel_id_here
-SELENIUM_HOST=selenium
-SELENIUM_PORT=4444
-```
-
-### Installation
-
-1. Clone the repository:
+1. **Install dependencies:**
 ```bash
-git clone <repository-url>
-cd liquidation_map_bot
+pip install -r requirements.txt
 ```
 
-2. Create the `.env` file with your configuration
+2. **Option 1: Local Chrome Mode (Recommended for development)**
+```bash
+python liquidation_map_server.py
+```
 
-3. Start the services:
+3. **Option 2: Docker Selenium Mode (Recommended for production)**
+```bash
+docker-compose up -d selenium
+python liquidation_map_server.py
+```
+
+4. **Web Demo:**
+```bash
+python web_demo.py
+# Visit http://localhost:8000
+```
+
+### Telegram Bot Setup
+
+1. **Create `.env` file:**
+```bash
+cp example.env .env
+# Edit .env with your bot token and channel ID
+```
+
+2. **Start with Docker:**
 ```bash
 docker-compose up -d
 ```
 
-**Note**: If you're using an ARM-based device (Apple Silicon Mac, Raspberry Pi, etc.), make sure to use the ARM-specific docker-compose.yml configuration shown above with `seleniarm/standalone-chromium:latest` instead of the standard selenium image.
+## 🔧 Configuration
 
-## Docker Configuration
+### Environment Variables
 
-The project uses Docker Compose with two services:
+- `TELEGRAM_BOT_TOKEN`: Your Telegram bot token (for bot only)
+- `TELEGRAM_CHANNEL_ID`: Your Telegram channel ID (for bot only)
+- `SELENIUM_HOST`: Selenium server host (default: localhost)
+- `SELENIUM_PORT`: Selenium server port (default: 4444)
+
+### MCP Client Configuration
+
+Configure your MCP client to use:
+```json
+{
+  "mcpServers": {
+    "bitcoin-liquidation-maps": {
+      "command": "python",
+      "args": ["liquidation_map_server.py"]
+    }
+  }
+}
+```
+
+## 🧪 Testing
+
+### MCP Server Testing
+```bash
+# Basic functionality test
+python test_server.py
+
+# Comprehensive examples (includes actual map capture)
+python example_usage.py
+
+# Web interface
+python web_demo.py
+```
+
+### Telegram Bot Testing
+Send `/help` to your bot to see available commands.
+
+## 🐳 Docker Configuration
+
+The project uses Docker Compose with services:
 
 - **selenium**: Headless Chrome browser for web scraping
-- **bot**: Python application running the Telegram bot
+- **bot**: Python application running the Telegram bot (original setup)
 
-### docker-compose.yml
+For ARM devices (Apple Silicon, Raspberry Pi), use the ARM-specific configuration in `docker-compose.yml`.
 
-**For x86/x64 systems:**
-```yaml
-version: '3.8'
-services:
-  selenium:
-    image: selenium/standalone-chrome:latest
-    ports:
-      - "4444:4444"
-      - "7900:7900"
-    environment:
-      - SE_NODE_SESSION_TIMEOUT=300
-      - SE_NODE_MAX_SESSIONS=1
-    volumes:
-      - /dev/shm:/dev/shm
+## 📊 Usage Examples
 
-  bot:
-    build: .
-    depends_on:
-      - selenium
-    env_file:
-      - .env
-    volumes:
-      - ./logs:/app/logs
-    restart: unless-stopped
+### MCP Server (Natural Language)
+```
+User: "Retrieve a Bitcoin map on the 24 hour timeframe"
+LLM: [Calls get_liquidation_map tool and returns image with price info]
+
+User: "What's the current ETH price?"
+LLM: [Calls get_crypto_price tool and returns current price]
 ```
 
-**For ARM devices (Apple Silicon, Raspberry Pi, etc.):**
-```yaml
-version: '3.8'
-services:
-  selenium:
-    image: seleniarm/standalone-chromium:latest
-    shm_size: 2gb
-    ports:
-      - "4444:4444"
-    restart: always
-
-  bot:
-    build: .
-    depends_on:
-      - selenium
-    env_file:
-      - .env
-    environment:
-      - SELENIUM_HOST=selenium
-      - SELENIUM_PORT=4444
-    volumes:
-      - ./logs:/app/logs
-    restart: unless-stopped
-```
-
-## Usage Examples
-
+### Telegram Bot (Commands)
 ```
 /map BTC                    # BTC heatmap (24 hour default)
 /map ETH 12 hour           # ETH heatmap for 12 hours
@@ -141,59 +213,38 @@ services:
 /map DOGE 3 month          # DOGE heatmap for 3 months
 ```
 
-## Technical Details
+## 🔍 Technical Details
 
 ### Architecture
 - **Web Scraping**: Selenium WebDriver with Chrome headless
 - **Image Processing**: PIL for screenshot optimization
 - **API Integration**: CoinGecko API for real-time prices
-- **Bot Framework**: pyTelegramBotAPI
+- **Bot Framework**: pyTelegramBotAPI (original)
+- **MCP Protocol**: Model Context Protocol for LLM integration (new)
 
 ### Key Components
 - `capture_coinglass_heatmap()`: Main scraping function with symbol selection
 - `get_crypto_price()`: Fetches current cryptocurrency prices
-- `handle_map_command()`: Processes Telegram commands
-- Automated symbol switching using ActionChains for realistic user simulation
+- `handle_map_command()`: Processes Telegram commands (bot)
+- `handle_call_tool()`: Processes MCP tool calls (server)
 
-### Screenshot Process
-1. Navigate to Coinglass liquidation heatmap page
-2. Select Symbol tab and input desired cryptocurrency
-3. Set timeframe via dropdown selection
-4. Capture chart area using Chrome DevTools Protocol
-5. Process and optimize image for Telegram delivery
-
-## Logging
-
-Logs are stored in `./logs/bot.log` and include:
-- Connection status to Selenium
-- Symbol selection attempts
-- Screenshot capture results
-- Error handling and debugging information
-
-## Troubleshooting
+## 🚨 Troubleshooting
 
 ### Common Issues
 
-**Bot not responding**: Check if Selenium container is running
-```bash
-docker-compose logs selenium
-```
-
-**Symbol selection fails**: Verify the website structure hasn't changed
-```bash
-docker-compose logs bot
-```
-
-**Image quality issues**: Adjust window size in `setup_webdriver()` function
+1. **Chrome driver not found**: Install Chrome browser or use Docker Selenium mode
+2. **Selenium connection failed**: Ensure Docker container is running
+3. **Website changes**: The scraper may need updates if Coinglass changes their structure
+4. **Bot not responding**: Check Telegram token and permissions
 
 ### Debug Mode
 
-Enable debug logging by modifying the logging level in `bot.py`:
+Enable debug logging by modifying the logging level:
 ```python
 logging.basicConfig(level=logging.DEBUG, ...)
 ```
 
-## Contributing
+## 📝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -201,10 +252,22 @@ logging.basicConfig(level=logging.DEBUG, ...)
 4. Test with different cryptocurrencies and timeframes
 5. Submit a pull request
 
-## License
+## 📄 License
 
 This project is for educational purposes. Please respect Coinglass's terms of service and rate limits.
 
-## Disclaimer
+## ⚠️ Disclaimer
 
-This bot is for informational purposes only. Cryptocurrency trading involves substantial risk. Always do your own research before making investment decisions.
+This tool is for informational purposes only. Cryptocurrency trading involves substantial risk. Always do your own research before making investment decisions.
+
+## 🆕 What's New in MCP Server
+
+The MCP server adds:
+- ✅ Natural language interface for LLMs
+- ✅ Web demo for easy testing
+- ✅ Automatic Chrome driver management
+- ✅ Better error handling and fallbacks
+- ✅ Comprehensive testing suite
+- ✅ Production-ready deployment options
+
+See `PROJECT_SUMMARY.md` for detailed technical information about the MCP server implementation.

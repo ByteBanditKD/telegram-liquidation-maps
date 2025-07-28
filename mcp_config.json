@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "bitcoin-liquidation-maps": {
+      "command": "python",
+      "args": ["liquidation_map_server.py"],
+      "env": {
+        "SELENIUM_HOST": "localhost",
+        "SELENIUM_PORT": "4444"
+      }
+    }
+  }
+}
