@@ -16,4 +16,4 @@ COPY . .
 RUN mkdir -p logs
 
 # Run the bot
-CMD ["python", "bot.py"]
+CMD ["python", "liquidation_map_server.py"]
