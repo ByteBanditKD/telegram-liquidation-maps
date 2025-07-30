@@ -7,6 +7,7 @@ from Coinglass. It supports multiple cryptocurrencies and timeframes.
 """
 
 import os
+from utils.chrome_driver import setup_chrome_driver
 import logging
 import requests
 import time
@@ -135,7 +136,8 @@ def capture_coinglass_heatmap(symbol="BTC", time_period="24 hour"):
     Returns:
         tuple: (image_path, success_message) or (None, error_message)
     """
-    driver = None
+    driver = setup_chrome_driver()
+    # driver = None
     try:
         logger.info(f"Starting capture of Coinglass {symbol} heatmap with {time_period} timeframe")
         driver = setup_webdriver()
