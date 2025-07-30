@@ -2,7 +2,7 @@
 
 This repository provides cryptocurrency liquidation heatmaps from Coinglass in two formats:
 
-2. **MCP Server** - New Model Context Protocol server for LLM integration
+2. **MCP-Server** - New Model Context Protocol server for LLM integration
 
 ## 🚀 Quick Start
 
