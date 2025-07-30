@@ -1,19 +1,30 @@
-FROM python:3.11-slim
+# Use a base image with Python
+FROM python:3.9-slim
 
-# Set up working directory
+# Install required system dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    curl \
+    unzip \
+    chromium \
+    chromium-driver \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set environment variables
+ENV CHROME_BIN=/usr/bin/chromium
+ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
+ENV DISPLAY=:99
+
+# Create and set working directory
 WORKDIR /app
 
-# Copy requirements first to leverage Docker cache
+# Copy requirements and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the bot code
+# Copy application code
 COPY . .
-# COPY bot.py .
-# COPY .env .
 
-# Create logs directory
-RUN mkdir -p logs
-
-# Run the bot
-CMD ["python", "liquidation_map_server.py"]
+# Set shared memory size
+VOLUME ["/dev/shm"]
