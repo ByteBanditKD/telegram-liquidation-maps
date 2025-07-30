@@ -1,8 +1,10 @@
 # Cryptocurrency Liquidation Maps
 
+[![smithery badge](https://smithery.ai/badge/@ByteBanditKD/telegram-liquidation-maps)](https://smithery.ai/server/@ByteBanditKD/telegram-liquidation-maps)
+
 This repository provides cryptocurrency liquidation heatmaps from Coinglass in two formats:
-1. **Telegram Bot** - Original bot for Telegram integration
-2. **MCP Server** - New Model Context Protocol server for LLM integration
+
+2. **MCP-Server** - New Model Context Protocol server for LLM integration
 
 ## 🚀 Quick Start
 
@@ -101,6 +103,14 @@ The original Telegram bot provides:
 ```
 
 ## 🛠️ Setup
+
+### Installing via Smithery
+
+To install Cryptocurrency Liquidation Maps Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@ByteBanditKD/telegram-liquidation-maps):
+
+```bash
+npx -y @smithery/cli install @ByteBanditKD/telegram-liquidation-maps --client claude
+```
 
 ### Prerequisites
 
