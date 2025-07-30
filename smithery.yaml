@@ -1,0 +1,24 @@
+# Smithery configuration file: https://smithery.ai/docs/build/project-config
+
+startCommand:
+  type: stdio
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({ command: 'python', args: ['liquidation_map_server.py'], env: { SELENIUM_HOST: config.seleniumHost, SELENIUM_PORT: config.seleniumPort } })
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required: []
+    properties:
+      seleniumHost:
+        type: string
+        default: localhost
+        description: Selenium server host
+      seleniumPort:
+        type: string
+        default: "4444"
+        description: Selenium server port
+  exampleConfig:
+    seleniumHost: localhost
+    seleniumPort: "4444"
