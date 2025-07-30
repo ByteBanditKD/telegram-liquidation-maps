@@ -1,7 +1,7 @@
 # Cryptocurrency Liquidation Maps
 
 This repository provides cryptocurrency liquidation heatmaps from Coinglass in two formats:
-1. **Telegram Bot** - Original bot for Telegram integration
+
 2. **MCP Server** - New Model Context Protocol server for LLM integration
 
 ## 🚀 Quick Start
