@@ -1,5 +1,5 @@
-# Use a base image with Python
-FROM python:3.9-slim
+# Use Python 3.10 instead of 3.9
+FROM python:3.10-slim
 
 # Install required system dependencies
 RUN apt-get update && apt-get install -y \
@@ -18,6 +18,9 @@ ENV DISPLAY=:99
 
 # Create and set working directory
 WORKDIR /app
+
+# Upgrade pip first
+RUN pip install --no-cache-dir --upgrade pip
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
